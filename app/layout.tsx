@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "天才港点 Genius Dim Sum",
-  description: "港式点心 · 经典早茶 · 现蒸现卖。Orchard 楼下，每晚 7PM–3AM，网上预点，到店直接取。",
+  description: "港式点心 · 经典早茶 · 现蒸现卖。Orchard 楼下，每天 4:30PM–1AM，网上预点，到店直接取。",
   icons: { icon: "/img/logo.jpg" },
 };
 
