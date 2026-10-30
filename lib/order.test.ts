@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { priceOrder, orderCode } from "./order.ts";
 import { SEED_MENU } from "./menu-seed.ts";
 
-const slots = ["尽快 ASAP", "7:00 PM"];
+const slots = ["尽快 ASAP", "4:30 PM"];
 const base = { name: "陈小姐", contact: "917-555-0100", pickup_time: "尽快 ASAP" };
 
 test("prices an order from the menu, ignoring client prices", () => {

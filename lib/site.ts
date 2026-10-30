@@ -6,10 +6,13 @@ export const SITE = {
   motto: "一笼热气，一口港味！",
   mottoEn: "Freshly Steamed, Full of Hong Kong Flavor!",
   location: "Orchard 楼下",
-  hoursLabel: "7:00 PM – 3:00 AM",
+  hoursLabel: "4:30 PM – 1:00 AM",
+  hoursShort: "4:30PM–1AM",
+  opensLabel: "下午 4:30",
+  closesLabel: "凌晨 1 点",
   timeZone: "America/New_York",
-  openHour: 19, // 7 PM
-  closeHour: 3, // 3 AM next day
+  openMinute: 16 * 60 + 30, // 4:30 PM
+  closeMinute: 1 * 60, // 1:00 AM next day
   orderContact: "点餐客服小月",
   wechatId: "", // fill in when known
   venmo: "@jaszzz",
@@ -18,8 +21,8 @@ export const SITE = {
 // Pickup slots every 30 min from opening until 30 min before closing.
 export function pickupSlots(): string[] {
   const slots = ["尽快 ASAP"];
-  const end = (SITE.closeHour + 24) * 60 - 30;
-  for (let m = SITE.openHour * 60; m <= end; m += 30) {
+  const end = SITE.closeMinute + 24 * 60 - 30;
+  for (let m = SITE.openMinute; m <= end; m += 30) {
     const h24 = Math.floor(m / 60) % 24;
     const mm = m % 60;
     const h12 = h24 % 12 || 12;
@@ -29,10 +32,8 @@ export function pickupSlots(): string[] {
 }
 
 export function isOpenNow(now = new Date()): boolean {
-  const hour = Number(
-    new Intl.DateTimeFormat("en-US", { timeZone: SITE.timeZone, hour: "numeric", hour12: false })
-      .formatToParts(now)
-      .find((p) => p.type === "hour")?.value,
-  ) % 24;
-  return hour >= SITE.openHour || hour < SITE.closeHour;
+  const parts = new Intl.DateTimeFormat("en-US", { timeZone: SITE.timeZone, hour: "numeric", minute: "numeric", hour12: false }).formatToParts(now);
+  const get = (t: string) => Number(parts.find((p) => p.type === t)?.value);
+  const m = (get("hour") % 24) * 60 + get("minute");
+  return m >= SITE.openMinute || m < SITE.closeMinute;
 }

@@ -1,5 +1,6 @@
 import OpenStatus from "@/components/OpenStatus";
 import OrderMenu from "@/components/OrderMenu";
+import PayMethods from "@/components/PayMethods";
 import { getMenu } from "@/lib/menu";
 import { SITE } from "@/lib/site";
 
@@ -26,7 +27,7 @@ export default async function Home() {
             <h1>{SITE.nameZh}</h1>
             <p className="latin">{SITE.nameEn}</p>
             <p className="tagline">{SITE.tagline}</p>
-            <div className="ribbon">重磅开业！每晚 7 点起，一笼一笼现蒸</div>
+            <div className="ribbon">重磅开业！每天{SITE.opensLabel}起，一笼一笼现蒸</div>
             <p className="pitch">不用跑 Flushing，{SITE.location}就能吃到热气腾腾的港式早茶。虾饺、烧卖、流沙包，深夜也有。</p>
             <div className="actions">
               <a className="btn solid" href="#menu">看菜单 · 在线预点</a>
@@ -56,7 +57,7 @@ export default async function Home() {
             <h4>Order 点餐</h4>
             <p className="big">网上预点，到店直接取</p>
             <p>选好点心提交订单，扫码付款，报订单号取餐，不用排队</p>
-            <div className="pay"><span>Venmo</span><span>支付宝 Alipay</span></div>
+            <PayMethods />
           </div>
         </div>
       </section>
