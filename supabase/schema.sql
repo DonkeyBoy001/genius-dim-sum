@@ -29,6 +29,10 @@ create table if not exists public.orders (
   status text not null default 'new' check (status in ('new', 'paid', 'picked_up', 'cancelled')),
   created_at timestamptz not null default now()
 );
+-- Online payments (Stripe). paid_via is null for orders paid by QR code.
+alter table public.orders add column if not exists paid_via text;
+alter table public.orders add column if not exists paid_at timestamptz;
+alter table public.orders add column if not exists stripe_session_id text;
 create index if not exists orders_created_at_idx on public.orders (created_at desc);
 
 -- Accounts allowed into /admin. Add yours after creating the user in

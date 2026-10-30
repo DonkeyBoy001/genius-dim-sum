@@ -73,6 +73,7 @@ export default function OrdersPanel() {
               <div className="top">
                 <span className="ocode">{o.code}</span>
                 <span className={`pill ${o.status}`}>{STATUS_LABEL[o.status]}</span>
+                {o.paid_via === "stripe" && <span className="pill online">在线已付</span>}
                 <span className="meta">
                   {new Date(o.created_at).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", timeZone: "America/New_York" })} 下单 · 取餐 {o.pickup_time}
                 </span>
@@ -85,6 +86,9 @@ export default function OrdersPanel() {
                 <div className="line total"><span>合计</span><span>{money(o.total_cents)}</span></div>
               </div>
               {o.note && <div className="meta">备注：{o.note}</div>}
+              {o.paid_via === "stripe" && o.status === "cancelled" && (
+                <div className="err">这单已在线付款，取消后记得去 Stripe 后台退款。</div>
+              )}
               <div className="actions">
                 {o.status === "new" && <button className="btn small red" onClick={() => setStatus(o, "paid")}>确认已付款</button>}
                 {(o.status === "new" || o.status === "paid") && (
