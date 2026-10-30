@@ -30,6 +30,9 @@ export type Order = {
   items: OrderLine[];
   total_cents: number;
   status: OrderStatus;
+  paid_via: string | null;
+  paid_at: string | null;
+  stripe_session_id: string | null;
   created_at: string;
 };
 

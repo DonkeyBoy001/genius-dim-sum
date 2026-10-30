@@ -3,6 +3,7 @@ import OrderMenu from "@/components/OrderMenu";
 import PayMethods from "@/components/PayMethods";
 import { getMenu } from "@/lib/menu";
 import { SITE } from "@/lib/site";
+import { stripeConfigured } from "@/lib/stripe";
 
 // Always read the latest menu, so sold-out and price changes show right away.
 export const dynamic = "force-dynamic";
@@ -10,6 +11,7 @@ export const dynamic = "force-dynamic";
 export default async function Home() {
   const { menu, live } = await getMenu();
   const orderingOpen = live && Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY);
+  const payOnline = orderingOpen && stripeConfigured;
 
   return (
     <>
@@ -39,7 +41,7 @@ export default async function Home() {
       </section>
 
       <main className="wrap" id="menu">
-        <OrderMenu menu={menu} orderingOpen={orderingOpen} />
+        <OrderMenu menu={menu} orderingOpen={orderingOpen} payOnline={payOnline} />
       </main>
 
       <section className="visit" id="visit">
@@ -56,7 +58,7 @@ export default async function Home() {
           <div>
             <h4>Order 点餐</h4>
             <p className="big">网上预点，到店直接取</p>
-            <p>选好点心提交订单，扫码付款，报订单号取餐，不用排队</p>
+            <p>选好点心提交订单，{payOnline ? "在线刷卡或扫码付款" : "扫码付款"}，报订单号取餐，不用排队</p>
             <PayMethods />
           </div>
         </div>
